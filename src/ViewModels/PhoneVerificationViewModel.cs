@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using TeleSider.Pages;
+using BackEnd;
 
 namespace TeleSider.ViewModels;
 
@@ -23,6 +24,7 @@ public partial class PhoneVerificationPageViewModel : ObservableObject
         else
         {
             // check if the verification code is correct
+            await Client.DoLogin(VerificationCode);
             await Shell.Current.GoToAsync(nameof(_2FAPage));
         }
     }

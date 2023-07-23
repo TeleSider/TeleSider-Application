@@ -33,6 +33,7 @@ public partial class StartPageViewModel : ObservableObject
                     bool request = await Shell.Current.DisplayAlert("Is this the correct number?", $"+{FullPhoneNumber}", "Yes", "Edit", FlowDirection.LeftToRight);
                     if (request)
                     {
+                        await Client.Login($"+{FullPhoneNumber}");
                         await NavigateToNumberVerificationPage();
                     }
                 }
@@ -53,7 +54,7 @@ public partial class StartPageViewModel : ObservableObject
     }
     // %2b means "+" in url, it is the only way to pass the phone number with a "+" sign
     [RelayCommand]
-    public async Task NavigateToNumberVerificationPage() => await Shell.Current.GoToAsync($"{nameof(PhoneVerificationPage)}?PhoneNumber=%2b{FullPhoneNumber}");
+    private async Task NavigateToNumberVerificationPage() => await Shell.Current.GoToAsync($"{nameof(PhoneVerificationPage)}?PhoneNumber=%2b{FullPhoneNumber}");
 
     private async Task DisplayInvalidPhoneNumberAlert(string details)
     {
