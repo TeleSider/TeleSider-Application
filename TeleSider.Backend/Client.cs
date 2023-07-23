@@ -9,7 +9,7 @@ public class Client
     public static string username = "";
     public static async Task Login(string phoneNumber)
     {
-        client = new WTelegram.Client(14750803, "be035114b6de6df8cb5b29199bca1e6c");
+        client = new WTelegram.Client(1, "1");
         await DoLogin(phoneNumber);
         //client.Dispose(); // the client must be disposed when you're done running your userbot.
     }
@@ -23,7 +23,6 @@ public class Client
                     case "password": return;
                     default: loginInfo = null; break;
                 }
-            Debug.WriteLine($"We are logged-in as {client.User} (id {client.User.id})");
         username = client.User.ToString();
         }
 
