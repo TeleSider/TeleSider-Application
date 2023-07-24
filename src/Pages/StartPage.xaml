@@ -64,7 +64,7 @@
                             />
                             <Entry
                                 Text="{Binding CountryCode}"
-                                Keyboard="Telephone"
+                                Keyboard="Numeric"
                                 ReturnType="Done"
                                 Placeholder="XXXX"
                                 MaxLength="4"
@@ -83,7 +83,7 @@
                         >
                         <HorizontalStackLayout>
                         <Entry
-                            Keyboard="Telephone"
+                            Keyboard="Numeric"
                             ReturnType="Done"
                             Placeholder="XXXXXXX"
                             Text="{Binding PhoneNumber}"

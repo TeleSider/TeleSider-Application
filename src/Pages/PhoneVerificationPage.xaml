@@ -45,6 +45,7 @@
                         <Entry
                             ReturnType="Done"
                             Placeholder="XXXXX"
+                            Keyboard="Numeric"
                             BackgroundColor="{StaticResource White}"
                             Text="{Binding VerificationCode}"
                             TextColor="{StaticResource Black}"
