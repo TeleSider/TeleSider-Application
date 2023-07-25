@@ -33,8 +33,17 @@ public partial class StartPageViewModel : ObservableObject
                     bool request = await Shell.Current.DisplayAlert("Is this the correct number?", $"+{FullPhoneNumber}", "Yes", "Edit", FlowDirection.LeftToRight);
                     if (request)
                     {
-                        await Client.Login($"+{FullPhoneNumber}");
-                        await NavigateToNumberVerificationPage();
+                        try
+                        {
+
+                            await Client.Login($"+{FullPhoneNumber}");
+                            await NavigateToNumberVerificationPage();
+                        }
+                        catch (Exception ex) 
+                        {
+                            await DisplayInvalidPhoneNumberAlert($"{ex}Please, try again");
+                            // remove a session 
+                        }
                     }
                 }
                 else

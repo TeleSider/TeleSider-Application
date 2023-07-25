@@ -1,11 +1,10 @@
-﻿using System.Diagnostics;
-using TL;
+﻿using TL;
 using WTelegram;
 
 namespace BackEnd;
 public class Client
 {
-    public static WTelegram.Client client;
+    private static WTelegram.Client client = null;
     public static string username = "";
     public static async Task Login(string phoneNumber)
     {
@@ -14,7 +13,7 @@ public class Client
         //client.Dispose(); // the client must be disposed when you're done running your userbot.
     }
 
-    public static async Task DoLogin(string loginInfo)
+    private static async Task DoLogin(string loginInfo)
         {
             while (client.User == null)
                 switch (await client.Login(loginInfo))
