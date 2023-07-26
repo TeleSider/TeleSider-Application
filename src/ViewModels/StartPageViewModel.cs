@@ -34,17 +34,23 @@ public partial class StartPageViewModel : ObservableObject
                     bool request = await Shell.Current.DisplayAlert("Is this the correct number?", $"+{FullPhoneNumber}", "Yes", "Edit", FlowDirection.LeftToRight);
                     if (request)
                     {
-                        try
+                        var permission = await PermissionManager.CheckAndRequestReadWrite();
+                        if (permission == PermissionStatus.Denied)
                         {
-
-                            await Client.Login($"+{FullPhoneNumber}");
-                            await NavigateToNumberVerificationPage();
+                            await Shell.Current.DisplayAlert("Permission is required", "This permission is required for TeleSider to run, please, try again", "Ok", "Cancel", FlowDirection.LeftToRight);
                         }
-                        catch (Exception ex) 
-                        {
-                            Debug.WriteLine(ex);
-                            await DisplayInvalidPhoneNumberAlert("Please, try again");
-                            // remove a session 
+                        else {
+                            try
+                            {
+                                await Client.Login($"+{FullPhoneNumber}");
+                                await NavigateToNumberVerificationPage();
+                            }
+                            catch (Exception ex) 
+                            {
+                                Debug.WriteLine(ex);
+                                await DisplayInvalidPhoneNumberAlert("Please, try again");
+                                // remove a session 
+                            }
                         }
                     }
                 }
