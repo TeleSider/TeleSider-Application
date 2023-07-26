@@ -4,7 +4,8 @@ TeleSider is a secure cloud storage based on Telegram, it allows you to control 
 TeleSider uses Telegram API to connect to the user's account and retrieve all the saved items. Then these items are displayed in the application's UI
 
 # Framework
-TeleSider is built with .NET MAUI so it is available on 4 platforms at once (Android, Windows, IOS and MacOS)
+TeleSider is built with .NET MAUI so it will be available on 4 platforms at once (Android, Windows, IOS and MacOS)
+It is currently available only on Android and Windows devices.
 
 # Contributing
 Feel free to contribute or suggest a feature
