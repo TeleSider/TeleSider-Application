@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using TeleSider.Pages;
 using BackEnd;
+using System.Diagnostics;
 
 namespace TeleSider.ViewModels;
 
@@ -41,7 +42,8 @@ public partial class StartPageViewModel : ObservableObject
                         }
                         catch (Exception ex) 
                         {
-                            await DisplayInvalidPhoneNumberAlert($"{ex}Please, try again");
+                            Debug.WriteLine(ex);
+                            await DisplayInvalidPhoneNumberAlert("Please, try again");
                             // remove a session 
                         }
                     }
