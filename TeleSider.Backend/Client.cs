@@ -13,7 +13,7 @@ public class Client
         //client.Dispose(); // the client must be disposed when you're done running your userbot.
     }
 
-    private static async Task DoLogin(string loginInfo)
+    public static async Task DoLogin(string loginInfo)
         {
             while (client.User == null)
                 switch (await client.Login(loginInfo))
