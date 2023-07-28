@@ -8,7 +8,7 @@ public class Client
     public static string username = "";
     public static async Task Login(string phoneNumber)
     {
-        client = new WTelegram.Client(1, "1");
+        client = new WTelegram.Client(1, "1", "/data/data/com.telesider.telesider/files/session");
         await DoLogin(phoneNumber);
         //client.Dispose(); // the client must be disposed when you're done running your userbot.
     }

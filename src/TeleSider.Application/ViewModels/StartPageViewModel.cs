@@ -34,13 +34,9 @@ public partial class StartPageViewModel : ObservableObject
                     bool request = await Shell.Current.DisplayAlert("Is this the correct number?", $"+{FullPhoneNumber}", "Yes", "Edit", FlowDirection.LeftToRight);
                     if (request)
                     {
-                        var permission = await PermissionManager.CheckAndRequestReadWrite();
-                        if (permission == PermissionStatus.Denied)
-                        {
-                            await Shell.Current.DisplayAlert("Permission is required", "This permission is required for TeleSider to run, please, try again", "Ok", "Cancel", FlowDirection.LeftToRight);
-                        }
-                        else {
-                            try
+                        // Asking the user to grant the required permission, if they won't - close the app
+                        await PermissionManager.CheckAndRequestReadWrite();
+                        try
                             {
                                 await Client.Login($"+{FullPhoneNumber}");
                                 await NavigateToNumberVerificationPage();
@@ -48,10 +44,9 @@ public partial class StartPageViewModel : ObservableObject
                             catch (Exception ex) 
                             {
                                 Debug.WriteLine(ex);
-                                await DisplayInvalidPhoneNumberAlert("Please, try again");
+                                await DisplayInvalidPhoneNumberAlert("Something went wrong while trying to sign you in. Please, try again");
                                 // remove a session 
                             }
-                        }
                     }
                 }
                 else
@@ -61,7 +56,7 @@ public partial class StartPageViewModel : ObservableObject
             }
             else
             {
-                await DisplayInvalidPhoneNumberAlert("Please, try again");
+                await DisplayInvalidPhoneNumberAlert("Please, make sure the phone number is correct and try again");
             }
         }
         else
