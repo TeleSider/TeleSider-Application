@@ -19,7 +19,7 @@ public static partial class Client
     public static async Task Login(string? phoneNumber=null)
     {
         DisposeClient();
-        CreateClientIfNeeded();
+        _client = new WTelegram.Client(Config);
         await DoLogin(phoneNumber, "verification_code");
     }
 
@@ -80,6 +80,7 @@ public static partial class Client
             {
                 Debug.WriteLine("Failed to resume the session");
                 Debug.WriteLine(ex.Message);
+                DisposeClient();
             }
             _isExistingSessionChecked = true;
         }

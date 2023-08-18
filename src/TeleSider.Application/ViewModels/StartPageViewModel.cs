@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using TeleSider.Pages;
 using Backend;
+using System.Diagnostics;
 
 namespace TeleSider.ViewModels;
 
@@ -41,9 +42,12 @@ public partial class StartPageViewModel : ObservableObject
                             await Client.Login($"+{PhoneNumber}");
                             await NavigateToNumberVerificationPage();
                         }
-                        catch
+                        catch (Exception ex)
                         {
-                            await Shell.Current.DisplayAlert("Something went wrong while trying to sign you in",
+#if DEBUG
+                                Debug.WriteLine($"Exception {ex}");
+#endif
+                                await Shell.Current.DisplayAlert("Something went wrong while trying to sign you in",
                                                             "Make sure the phone number is correct, check your connection and try again",
                                                             "Ok", FlowDirection.LeftToRight);
                         }
@@ -85,6 +89,9 @@ public partial class StartPageViewModel : ObservableObject
         SetSignInButtonText(true);
         if (await Client.ResumeSession())
         {
+#if ANDROID
+            Platforms.KeyboardManager.HideKeyboard();
+#endif
             await Shell.Current.GoToAsync(nameof(HomePage));
         }
         SetSignInButtonText();

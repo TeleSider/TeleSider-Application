@@ -22,12 +22,12 @@ public static class MauiProgram
         builder.Services.AddSingleton<HomePage>();
         builder.Services.AddSingleton<HomePageViewModel>();
 
-        builder.Services.AddScoped<StartPage>();
-        builder.Services.AddScoped<PhoneVerificationPage>();
-        builder.Services.AddScoped<_2FAPage>();
-        builder.Services.AddScoped<StartPageViewModel>();
-        builder.Services.AddScoped<PhoneVerificationPageViewModel>();
-        builder.Services.AddScoped<_2FAPageViewModel>();
+        builder.Services.AddTransient<StartPage>();
+        builder.Services.AddTransient<PhoneVerificationPage>();
+        builder.Services.AddTransient<_2FAPage>();
+        builder.Services.AddTransient<StartPageViewModel>();
+        builder.Services.AddTransient<PhoneVerificationPageViewModel>();
+        builder.Services.AddTransient<_2FAPageViewModel>();
 
 
 #if DEBUG
