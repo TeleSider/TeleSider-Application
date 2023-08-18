@@ -45,7 +45,7 @@ public partial class StartPageViewModel : ObservableObject
                         catch (Exception ex)
                         {
 #if DEBUG
-                                Debug.WriteLine($"Exception {ex}");
+                                Debug.WriteLine(ex);
 #endif
                                 await Shell.Current.DisplayAlert("Something went wrong while trying to sign you in",
                                                             "Make sure the phone number is correct, check your connection and try again",
