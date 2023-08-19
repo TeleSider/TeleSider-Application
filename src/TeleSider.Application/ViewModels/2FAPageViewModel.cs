@@ -27,19 +27,22 @@ public partial class _2FAPageViewModel : ObservableObject
         }
         else
         {
-            try
+            if (await ConnectionManager.IsConnected())
             {
-                SetSubmitButtonText(true);
-                await Client.DoLogin(Password, null);
-                await Shell.Current.GoToAsync(nameof(HomePage));
-            }
-            catch
-            {
-                await Shell.Current.DisplayAlert("Invalid password", "Please, try entering your password again", "Ok", "Cancel", FlowDirection.LeftToRight);
-            }
-            finally
-            {
-                SetSubmitButtonText();
+                try
+                {
+                    SetSubmitButtonText(true);
+                    await Client.DoLogin(Password, null);
+                    await Shell.Current.GoToAsync(nameof(HomePage));
+                }
+                catch
+                {
+                    await Shell.Current.DisplayAlert("Invalid password", "Please, try entering your password again", "Ok", "Cancel", FlowDirection.LeftToRight);
+                }
+                finally
+                {
+                    SetSubmitButtonText();
+                }
             }
         }
     }

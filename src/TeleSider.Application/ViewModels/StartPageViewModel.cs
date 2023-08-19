@@ -35,25 +35,27 @@ public partial class StartPageViewModel : ObservableObject
                     {
                         // Asking the user to grant the required permission, if they won't - close the app
                         await PermissionManager.CheckAndRequestReadWrite();
-                        if (await IsConnected())
-                        try
+                        if (await ConnectionManager.IsConnected())
                         {
-                            SetSignInButtonText(true);
-                            await Client.Login($"+{PhoneNumber}");
-                            await NavigateToNumberVerificationPage();
-                        }
-                        catch (Exception ex)
-                        {
+                            try
+                            {
+                                SetSignInButtonText(true);
+                                await Client.Login($"+{PhoneNumber}");
+                                await NavigateToNumberVerificationPage();
+                            }
+                            catch (Exception ex)
+                            {
 #if DEBUG
-                                Debug.WriteLine(ex);
+                                    Debug.WriteLine(ex);
 #endif
-                                await Shell.Current.DisplayAlert("Something went wrong while trying to sign you in",
-                                                            "Make sure the phone number is correct, check your connection and try again",
-                                                            "Ok", FlowDirection.LeftToRight);
-                        }
-                        finally
-                        {
-                            SetSignInButtonText();
+                                    await Shell.Current.DisplayAlert("Something went wrong while trying to sign you in",
+                                                                "Make sure the phone number is correct, check your connection and try again",
+                                                                "Ok", FlowDirection.LeftToRight);
+                            }
+                            finally
+                            {
+                                SetSignInButtonText();
+                            }
                         }
                     }
                     else
@@ -95,18 +97,6 @@ public partial class StartPageViewModel : ObservableObject
             await Shell.Current.GoToAsync(nameof(HomePage));
         }
         SetSignInButtonText();
-    }
-    private async Task<bool> IsConnected()
-    {
-        if (Connectivity.Current.NetworkAccess == NetworkAccess.Internet)
-        {
-            return true;
-        }
-        else
-        {
-            await Shell.Current.DisplayAlert("No Internet Access", "Please, check your connection and try again", "Ok", FlowDirection.LeftToRight);
-            return false;
-        }
     }
     private void SetSignInButtonText(bool isloading=false)
     {

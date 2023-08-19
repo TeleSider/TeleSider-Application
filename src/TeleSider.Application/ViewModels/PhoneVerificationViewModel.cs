@@ -30,26 +30,29 @@ public partial class PhoneVerificationPageViewModel : ObservableObject
         }
         else
         {
-            try
+            if (await ConnectionManager.IsConnected())
             {
-                SetVerifyButtonText(true);
-                string requiredItem = await Client.DoLogin(VerificationCode, "password");
-                if (requiredItem == "password") 
+                try
                 {
-                    await Shell.Current.GoToAsync(nameof(_2FAPage));
+                    SetVerifyButtonText(true);
+                    string requiredItem = await Client.DoLogin(VerificationCode, "password");
+                    if (requiredItem == "password") 
+                    {
+                        await Shell.Current.GoToAsync(nameof(_2FAPage));
+                    }
+                    else
+                    {
+                        await Shell.Current.GoToAsync(nameof(HomePage));
+                    }
                 }
-                else
+                catch
                 {
-                    await Shell.Current.GoToAsync(nameof(HomePage));
+                    await Shell.Current.DisplayAlert("Invalid verification code", "Please, check the verification code and try again", "Ok", "Cancel", FlowDirection.LeftToRight);
                 }
-            }
-            catch
-            {
-                await Shell.Current.DisplayAlert("Invalid verification code", "Please, check the verification code and try again", "Ok", "Cancel", FlowDirection.LeftToRight);
-            }
-            finally
-            {
-                SetVerifyButtonText();
+                finally
+                {
+                    SetVerifyButtonText();
+                }
             }
         }
     }
