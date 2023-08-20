@@ -1,7 +1,7 @@
 namespace TeleSider;
 public static class ConnectionManager
 {
-    public static async Task<bool> IsConnected()
+    public static async Task<bool> IsConnected(bool displayAlert=true)
     {
         if (Connectivity.Current.NetworkAccess == NetworkAccess.Internet)
         {
@@ -9,7 +9,10 @@ public static class ConnectionManager
         }
         else
         {
-            await Shell.Current.DisplayAlert("No Internet Access", "Please, check your connection and try again", "Ok", FlowDirection.LeftToRight);
+            if (displayAlert)
+            {
+                await Shell.Current.DisplayAlert("No Internet Access", "Please, check your connection and try again", "Ok", FlowDirection.LeftToRight);
+            }
             return false;
         }
     }

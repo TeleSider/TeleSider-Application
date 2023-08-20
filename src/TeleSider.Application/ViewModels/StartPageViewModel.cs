@@ -88,15 +88,18 @@ public partial class StartPageViewModel : ObservableObject
     [RelayCommand]
     private async Task LoginTheExistingUser()
     {
-        SetSignInButtonText(true);
-        if (await Client.ResumeSession())
+        if (await ConnectionManager.IsConnected(false))
         {
+            SetSignInButtonText(true);
+            if (await Client.ResumeSession())
+            {
 #if ANDROID
-            Platforms.KeyboardManager.HideKeyboard();
+                Platforms.KeyboardManager.HideKeyboard();
 #endif
-            await Shell.Current.GoToAsync(nameof(HomePage));
+                await Shell.Current.GoToAsync(nameof(HomePage));
+            }
+            SetSignInButtonText();
         }
-        SetSignInButtonText();
     }
     private void SetSignInButtonText(bool isloading=false)
     {
