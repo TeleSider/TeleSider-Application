@@ -80,7 +80,6 @@ public static partial class Client
             {
                 Debug.WriteLine("Failed to resume the session");
                 Debug.WriteLine(ex.Message);
-                DisposeClient();
             }
             _isExistingSessionChecked = true;
         }
