@@ -79,6 +79,7 @@
                 </Frame>
                 <Button
                     Command="{Binding SignInButtonPressedCommand}"
+                    IsEnabled="{Binding IsSignInButtonEnabled}"
                     Text="{Binding SignInButtonText}"
                     TextColor="{StaticResource White}"
                     FontSize="Body"

@@ -14,6 +14,9 @@ public partial class StartPageViewModel : ObservableObject
     [ObservableProperty]
     private string phoneNumber = null;
 
+    [ObservableProperty]
+    private bool isSignInButtonEnabled = true;
+
     [RelayCommand]
     private async Task TapSignUp(string url) => await Launcher.OpenAsync(url);
 
@@ -39,7 +42,7 @@ public partial class StartPageViewModel : ObservableObject
                         {
                             try
                             {
-                                SetSignInButtonText(true);
+                                SetSignInButtonValues(true);
                                 await Client.Login($"+{PhoneNumber}");
                                 await NavigateToNumberVerificationPage();
                             }
@@ -54,13 +57,13 @@ public partial class StartPageViewModel : ObservableObject
                             }
                             finally
                             {
-                                SetSignInButtonText();
+                                SetSignInButtonValues();
                             }
                         }
                     }
                     else
                     {
-                        SetSignInButtonText();
+                        SetSignInButtonValues();
                     }
                 }
                 else
@@ -90,19 +93,20 @@ public partial class StartPageViewModel : ObservableObject
     {
         if (await ConnectionManager.IsConnected(false))
         {
-            SetSignInButtonText(true);
+#if ANDROID
+            Platforms.KeyboardManager.HideKeyboard();
+#endif
+            SetSignInButtonValues(true);
             if (await Client.ResumeSession())
             {
-#if ANDROID
-                Platforms.KeyboardManager.HideKeyboard();
-#endif
                 await Shell.Current.GoToAsync(nameof(HomePage));
             }
-            SetSignInButtonText();
+            SetSignInButtonValues();
         }
     }
-    private void SetSignInButtonText(bool isloading=false)
+    private void SetSignInButtonValues(bool isloading=false)
     {
         SignInButtonText = isloading ? "Loading..." : "Sign In";
+        IsSignInButtonEnabled = !isloading;
     }
 }
