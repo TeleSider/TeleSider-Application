@@ -7,10 +7,10 @@
              x:Class="TeleSider.Pages.StartPage">
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="{AppThemeBinding Light={StaticResource Tertiary}, Dark={StaticResource Primary}}"/>
-        <toolkit:EventToCommandBehavior
-        EventName="Appearing"
-        Command="{Binding LoginTheExistingUserCommand}" />
     </ContentPage.Behaviors>
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False"/>
+    </Shell.BackButtonBehavior>
     <VerticalStackLayout Spacing="5" Padding="0,20,0,0" BackgroundColor="{AppThemeBinding Light={StaticResource Tertiary}, Dark={StaticResource Primary}}">
         <Label
             Text="Welcome to"

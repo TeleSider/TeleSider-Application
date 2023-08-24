@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewmodel="clr-namespace:TeleSider.ViewModels"
+             x:DataType="viewmodel:LoadingPageViewModel"
+             x:Class="TeleSider.Pages.LoadingPage">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False"/>
+    </Shell.BackButtonBehavior>
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="{StaticResource Secondary}"/>
+    </ContentPage.Behaviors>
+    <Grid BackgroundColor="{StaticResource Secondary}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="100" />
+        </Grid.RowDefinitions>
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding ScreenTappedCommand}"/>
+        </Grid.GestureRecognizers>
+        <Label
+            Grid.Row="0"
+            Margin="0,60,0,0"
+            Text="TeleSider"
+            TextColor="{StaticResource Tertiary}"
+            FontSize="52"
+            VerticalOptions="Start"
+            HorizontalOptions="Center" />
+        <Label
+            Grid.Row="1"
+            Text="#60ABA8"
+            FontSize="14"
+            VerticalOptions="End"
+            HorizontalOptions="Center" />
+    </Grid>
+</ContentPage>

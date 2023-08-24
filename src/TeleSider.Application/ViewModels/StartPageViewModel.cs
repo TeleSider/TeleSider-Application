@@ -88,22 +88,6 @@ public partial class StartPageViewModel : ObservableObject
     {
         await Shell.Current.DisplayAlert("Invalid phone number", details, "Ok", FlowDirection.LeftToRight);
     }
-    [RelayCommand]
-    private async Task LoginTheExistingUser()
-    {
-        if (await ConnectionManager.IsConnected(false))
-        {
-#if ANDROID
-            Platforms.KeyboardManager.HideKeyboard();
-#endif
-            SetSignInButtonValues(true);
-            if (await Client.ResumeSession())
-            {
-                await Shell.Current.GoToAsync(nameof(HomePage));
-            }
-            SetSignInButtonValues();
-        }
-    }
     private void SetSignInButtonValues(bool isloading=false)
     {
         SignInButtonText = isloading ? "Loading..." : "Sign In";
