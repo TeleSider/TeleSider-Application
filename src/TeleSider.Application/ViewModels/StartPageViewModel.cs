@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using TeleSider.Pages;
 using Backend;
@@ -24,7 +24,7 @@ public partial class StartPageViewModel : ObservableObject
     private async Task SignInButtonPressed()
     {
 #if ANDROID
-        Platforms.KeyboardManager.HideKeyboard();
+        KeyboardManager.HideKeyboard();
 #endif
         if (!String.IsNullOrWhiteSpace(PhoneNumber))
         {
@@ -87,6 +87,22 @@ public partial class StartPageViewModel : ObservableObject
     private async Task DisplayInvalidPhoneNumberAlert(string details)
     {
         await Shell.Current.DisplayAlert("Invalid phone number", details, "Ok", FlowDirection.LeftToRight);
+    }
+    [RelayCommand]
+    private async Task LoginTheExistingUser()
+    {
+        if (await ConnectionManager.IsConnected(false))
+        {
+            SetSignInButtonText(true);
+            if (await Client.ResumeSession())
+            {
+#if ANDROID
+                KeyboardManager.HideKeyboard();
+#endif
+                await Shell.Current.GoToAsync(nameof(HomePage));
+            }
+            SetSignInButtonText();
+        }
     }
     private void SetSignInButtonValues(bool isloading=false)
     {

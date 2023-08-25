@@ -19,7 +19,7 @@ public partial class _2FAPageViewModel : ObservableObject
     private async Task SubmitButtonPressed()
     {
 #if ANDROID
-        Platforms.KeyboardManager.HideKeyboard();
+        KeyboardManager.HideKeyboard();
 #endif
         if (String.IsNullOrWhiteSpace(Password))
         {

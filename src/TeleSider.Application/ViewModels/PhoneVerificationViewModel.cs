@@ -22,7 +22,7 @@ public partial class PhoneVerificationPageViewModel : ObservableObject
     private async Task SubmitButtonPressed()
     {
 #if ANDROID
-        Platforms.KeyboardManager.HideKeyboard();
+        KeyboardManager.HideKeyboard();
 #endif
         if (VerificationCode == null || VerificationCode.Length < 5 || !VerificationCode.All(Char.IsDigit))
         {

@@ -1,6 +1,5 @@
 # ☁️ Info
 TeleSider is a secure cloud storage based on Telegram\
-It allows you to control items that you have saved in the Telegram messenger\
 The app has a simple cloud storage UI to help you manage your saved messages
 
 # 💻 Platforms
