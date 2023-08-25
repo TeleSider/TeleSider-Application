@@ -10,9 +10,16 @@ public partial class LoadingPageViewModel : ObservableObject
     [RelayCommand]
     private async Task ScreenTapped()
     {
-        if (Client.isLoggedIn)
+        if (Client.isExistingSessionChecked)
         {
-            await Shell.Current.GoToAsync(nameof(HomePage));
+            if (Client.isLoggedIn)
+            {
+                await Shell.Current.GoToAsync(nameof(HomePage));
+            }
+            else
+            {
+                await Shell.Current.GoToAsync(nameof(StartPage));
+            }
         }
     }
 }

@@ -5,7 +5,6 @@ namespace TeleSider;
 
 public partial class App : Application
 {
-    bool isLoggedIn = false;
     public App()
     {
         InitializeComponent();
@@ -19,18 +18,17 @@ public partial class App : Application
 
         task.ContinueWith((task) =>
         {
-            MainThread.BeginInvokeOnMainThread(() =>
+            MainThread.BeginInvokeOnMainThread(async () =>
             {
                 MainPage = new AppShell();
-                if (isLoggedIn)
+                if (Client.isLoggedIn)
                 {
-                    Shell.Current.GoToAsync(nameof(HomePage));
+                    await Shell.Current.GoToAsync(nameof(HomePage));
                 }
                 else
                 {
-                    Shell.Current.GoToAsync(nameof(StartPage));
+                    await Shell.Current.GoToAsync(nameof(StartPage));
                 }
-                
             });
         });
 
@@ -39,6 +37,6 @@ public partial class App : Application
 
     private async Task InitAsync()
     {
-        isLoggedIn = await Client.ResumeSession();
+        await Client.ResumeSession();
     }
 }

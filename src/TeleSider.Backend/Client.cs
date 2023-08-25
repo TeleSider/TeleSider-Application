@@ -12,8 +12,7 @@ public static partial class Client
     private static string? _sessionPath;
 
     public static bool isLoggedIn = false;
-
-    private static bool _isExistingSessionChecked = false;
+    public static bool isExistingSessionChecked = false;
 
 
     public static async Task Login(string? phoneNumber=null)
@@ -68,7 +67,7 @@ public static partial class Client
     // returns true if the current user is successfully logged in, otherwise returns false
     public static async Task<bool> ResumeSession()
     {
-        if (!_isExistingSessionChecked)
+        if (!isExistingSessionChecked)
         {
             CreateClientIfNeeded();
             try
@@ -81,7 +80,7 @@ public static partial class Client
                 Debug.WriteLine("Failed to resume the session");
                 Debug.WriteLine(ex.Message);
             }
-            _isExistingSessionChecked = true;
+            isExistingSessionChecked = true;
         }
         return isLoggedIn;
     }
